@@ -37,4 +37,24 @@ final class CheckoutTotalTest extends BaseTestCase
 
         $this->assertEquals("£391.05", $checkout->getTotalFormatted());
     }
+
+    public function testTotalWithNoProductsIsCorrect()
+    {
+        $user = $this->getUser();
+
+        $checkout = $this->container->get(CheckoutService::class);
+        $checkout->setUser($user);
+
+        $this->assertEquals("£0.00", $checkout->getTotalFormatted());
+    }
+
+    public function testTotalWithNoProductsButWithOfferIsCorrect()
+    {
+        $user = $this->getUser(15);
+
+        $checkout = $this->container->get(CheckoutService::class);
+        $checkout->setUser($user);
+
+        $this->assertEquals("£0.00", $checkout->getTotalFormatted());
+    }
 }
