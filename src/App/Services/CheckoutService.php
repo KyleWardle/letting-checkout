@@ -72,7 +72,7 @@ class CheckoutService
         }
 
         foreach ($this->offers as $offer) {
-            $total -= $this->calculatePercentage($total, $offer->getDiscountPercentage());
+            $total -= $this->calculatePercentageAmount($total, $offer->getDiscountPercentage());
         }
 
         return $total;
@@ -88,7 +88,7 @@ class CheckoutService
         return "£". number_format($this->getTotalInPounds(), 2);
     }
 
-    private function calculatePercentage(int $amount, int $percentage): int
+    private function calculatePercentageAmount(int $amount, int $percentage): int
     {
         return ($amount / 100) * $percentage;
     }
