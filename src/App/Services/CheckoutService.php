@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use App\Entities\Offer;
+use App\Entities\Product;
 use App\Entities\User;
+use App\Exceptions\ProductAlreadyAddedException;
 use App\Repositories\OfferRepository;
-use App\Repositories\ProductRepository;
 
 class CheckoutService
 {
@@ -15,6 +16,12 @@ class CheckoutService
      * @var Offer[]
      */
     private array $offers = [];
+
+    /**
+     * @var Product[]
+     */
+    private array $products = [];
+
     private OfferRepository $offerRepository;
 
     public function __construct(OfferRepository $offerRepository)
@@ -26,6 +33,34 @@ class CheckoutService
     {
         $this->user =$user;
         $this->calculateEligibleOffers();
+    }
+
+    /**
+     * @throws ProductAlreadyAddedException
+     */
+    public function addProduct(Product $product): void
+    {
+        if (in_array($product, $this->products)) {
+            throw new ProductAlreadyAddedException;
+        }
+
+        $this->products[] = $product;
+    }
+
+    /**
+     * @return Offer[]
+     */
+    public function getOffers(): array
+    {
+        return $this->offers;
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function getProducts(): array
+    {
+        return $this->products;
     }
 
     private function calculateEligibleOffers(): void
@@ -41,13 +76,5 @@ class CheckoutService
 
             $this->offers[] = $offer;
         }
-    }
-
-    /**
-     * @return Offer[]
-     */
-    public function getOffers(): array
-    {
-        return $this->offers;
     }
 }

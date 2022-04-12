@@ -7,7 +7,7 @@ final class CheckoutOffersTest extends BaseTestCase
 {
     public function testUserWithContractLengthLongerThanTwelveMonthsHasDiscount()
     {
-        $user = new User('Test User', 15);
+        $user = $this->getUser(15);
 
         $checkout = $this->container->get(CheckoutService::class);
         $checkout->setUser($user);
@@ -20,7 +20,7 @@ final class CheckoutOffersTest extends BaseTestCase
 
     public function testUserWithContractLengthEqualToTwelveMonthsHasDiscount()
     {
-        $user = new User('Test User', 12);
+        $user = $this->getUser(12);
 
         $checkout = $this->container->get(CheckoutService::class);
         $checkout->setUser($user);
@@ -33,7 +33,7 @@ final class CheckoutOffersTest extends BaseTestCase
 
     public function testUserWithContractLengthLessThanTwelveMonthsDoesNotGetDiscount()
     {
-        $user = new User('Test User', 7);
+        $user = $this->getUser(7);
 
         $checkout = $this->container->get(CheckoutService::class);
         $checkout->setUser($user);
