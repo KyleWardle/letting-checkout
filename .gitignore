@@ -1,2 +1,4 @@
 src/vendor
 .idea
+src/composer.phar
+src/.phpunit.result.cache
