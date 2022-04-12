@@ -63,6 +63,36 @@ class CheckoutService
         return $this->products;
     }
 
+    public function getTotalInPence(): int
+    {
+        $total = 0;
+
+        foreach ($this->products as $product) {
+            $total += $product->getPriceInPence();
+        }
+
+        foreach ($this->offers as $offer) {
+            $total -= $this->calculatePercentage($total, $offer->getDiscountPercentage());
+        }
+
+        return $total;
+    }
+
+    public function getTotalInPounds(): float
+    {
+        return $this->getTotalInPence() / 100;
+    }
+
+    public function getTotalFormatted(): string
+    {
+        return "£". number_format($this->getTotalInPounds(), 2);
+    }
+
+    private function calculatePercentage(int $amount, int $percentage): int
+    {
+        return ($amount / 100) * $percentage;
+    }
+
     private function calculateEligibleOffers(): void
     {
         $this->offers = [];
