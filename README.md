@@ -1,4 +1,4 @@
-#Letting Checkout
+# Letting Checkout
 
 This is a simple checkout POC which allows you to add products to a checkout and get a total from the checkout.
 
